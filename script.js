@@ -1,4 +1,4 @@
-let startTime, updatedTime, difference, tInterval, lastLapTime, pausedTime;
+let startTime, updatedTime, difference, tInterval, lastLapTime, pausedTime, pausedTotalTime;
 let running = false;
 
 const timeDisplay = document.getElementById('stopwatch');
@@ -21,6 +21,9 @@ function startStopTimer() {
         tInterval = setInterval(updateTime, 10);
         startStopButton.innerText = 'Stop';
         running = true;
+        if (pausedTime) {
+            pausedTotalTime = new Date().getTime() - pausedTime;
+        }
     } else {
         clearInterval(tInterval);
         pausedTime = new Date().getTime();
@@ -56,8 +59,9 @@ function pad(number, digits = 2) {
 function addLap(event) {
     if (!running) return;
     const lapName = event.target.innerText;
-    const currentTime = running ? new Date().getTime() : pausedTime;
-    const lapDuration = currentTime - lastLapTime;
+    const currentTime = new Date().getTime();
+    const lapDuration = currentTime - lastLapTime - (pausedTotalTime || 0);
+    pausedTotalTime = null;
     lastLapTime = currentTime;
 
     let totalSeconds = (lapDuration / 1000).toFixed(3); // Convert milliseconds to seconds and keep 3 decimal places
