@@ -83,7 +83,7 @@ function compileLapsToCSV() {
 }
 
 function shareLaps() {
-    let csvContent = compileLapsToCSV();
+    const csvContent = compileLapsToCSV();
     csvContent = csvContent.replace(/\t/g, '%09')
     const mailtoLink = `mailto:?subject=Stopwatch Laps&body=${encodeURIComponent(csvContent)}`;
     window.location.href = mailtoLink;
