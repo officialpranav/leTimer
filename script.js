@@ -4,7 +4,7 @@ let running = false;
 const timeDisplay = document.getElementById('stopwatch');
 const startStopButton = document.getElementById('start-stop');
 const resetButton = document.getElementById('reset');
-const lapButtons = document.querySelectorAll('#looking-for-die-lap, #adjusting-parameters-lap, #other-lap, #material-handling-lap, #adding-die-lap, #lin-gauge-lap, #measuring-lap, #removing-die-lap, #first-off-lap');
+const lapButtons = document.querySelectorAll('#talking-lap, #looking-for-die-lap, #adjusting-parameters-lap, #other-lap, #material-handling-lap, #adding-die-lap, #lin-gauge-lap, #measuring-lap, #removing-die-lap, #first-off-lap');
 const lapsContainer = document.getElementById('laps-list');
 const lapNameInput = document.getElementById('stopwatch-name');
 const shareButton = document.getElementById('share');
@@ -54,22 +54,18 @@ function pad(number, digits = 2) {
 }
 
 function addLap(event) {
-    if(!running) return
+    if (!running) return;
     const lapName = event.target.innerText;
     const currentTime = running ? new Date().getTime() : pausedTime;
     const lapDuration = currentTime - lastLapTime;
     lastLapTime = currentTime;
 
-    let hours = Math.floor((lapDuration % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    let minutes = Math.floor((lapDuration % (1000 * 60 * 60)) / (1000 * 60));
-    let seconds = Math.floor((lapDuration % (1000 * 60)) / 1000);
-    let milliseconds = Math.floor((lapDuration % 1000) / 10);
+    let totalSeconds = (lapDuration / 1000).toFixed(3); // Convert milliseconds to seconds and keep 3 decimal places
 
-    const lapTime = `${hours}:${pad(minutes)}:${pad(seconds)}.${pad(milliseconds, 3)}`;
+    const lapTime = `${totalSeconds}`;
     const lapElement = document.createElement('li');
-    // lapElement.className = 'list-group-item w-100';
     lapElement.innerText = `${lapName}: ${lapTime}`;
-    if(lapsContainer.firstChild){
+    if (lapsContainer.firstChild) {
         lapsContainer.insertBefore(lapElement, lapsContainer.firstChild);
     } else {
         lapsContainer.appendChild(lapElement);
@@ -77,11 +73,11 @@ function addLap(event) {
 }
 
 function compileLapsToCSV() {
-    let csvContent = `${lapNameInput.value || 'Unnamed'}\nLap Name, Lap Time\n`;
+    let csvContent = `${lapNameInput.value || 'Unnamed'}\n\n`;
     const lapElements = lapsContainer.getElementsByTagName('li');
     for (let i = lapElements.length - 1; i >= 0; i--) {
         const [lapName, lapTime] = lapElements[i].innerText.split(': ');
-        csvContent += `${lapName}, ${lapTime}\n`;
+        csvContent += `${lapName}\t ${lapTime}\n`;
     }
     return csvContent;
 }
