@@ -4,7 +4,7 @@ let running = false;
 const timeDisplay = document.getElementById('stopwatch');
 const startStopButton = document.getElementById('start-stop');
 const resetButton = document.getElementById('reset');
-const lapButtons = document.querySelectorAll('#talking-lap, #looking-for-die-lap, #adjusting-parameters-lap, #other-lap, #material-handling-lap, #adding-die-lap, #lin-gauge-lap, #measuring-lap, #removing-die-lap, #first-off-lap');
+const lapButtons = document.querySelectorAll('#adjusting-die-lap, #looking-at-paper-lap, #putting-away-die-lap, #talking-lap, #looking-for-die-lap, #adjusting-parameters-lap, #other-lap, #material-handling-lap, #adding-die-lap, #lin-gauge-lap, #measuring-lap, #removing-die-lap, #first-off-lap');
 const lapsContainer = document.getElementById('laps-list');
 const lapNameInput = document.getElementById('stopwatch-name');
 const shareButton = document.getElementById('share');
@@ -58,7 +58,7 @@ function pad(number, digits = 2) {
 
 function addLap(event) {
     if (!running) return;
-    const lapName = event.target.innerText;
+    const lapName = event.target.name;
     const currentTime = new Date().getTime();
     const lapDuration = currentTime - lastLapTime - (pausedTotalTime || 0);
     pausedTotalTime = null;
