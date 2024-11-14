@@ -34,12 +34,17 @@ function startStopTimer() {
 
 function resetTimer() {
     clearInterval(tInterval);
-    running = false;
-    difference = 0;
-    lastLapTime = null;
     timeDisplay.innerHTML = '0:00:00.000';
     startStopButton.innerText = 'Start';
     lapsContainer.innerHTML = '';
+    startTime = null;
+    updatedTime = null;
+    difference = null;
+    running = false;
+    tInterval = null;
+    lastLapTime = null;
+    pausedTime = null;
+    pausedTotalTime = null;
 }
 
 function updateTime() {
