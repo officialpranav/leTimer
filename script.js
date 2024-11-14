@@ -8,6 +8,7 @@ const lapButtons = document.querySelectorAll('#adjusting-die-lap, #looking-at-pa
 const lapsContainer = document.getElementById('laps-list');
 const lapNameInput = document.getElementById('stopwatch-name');
 const shareButton = document.getElementById('share');
+const wakeButton = document.getElementById('wake');
 
 startStopButton.addEventListener('click', startStopTimer);
 resetButton.addEventListener('click', resetTimer);
